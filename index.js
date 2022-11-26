@@ -23,6 +23,7 @@ async function run() {
     const productsCollection = client.db("laptoTech").collection("products");
     const categoryCollection = client.db("laptoTech").collection("category");
     const bookingCollection = client.db("laptoTech").collection("bookings");
+    const usersCollection = client.db("laptoTech").collection("users");
 
     app.get("/products", async (req, res) => {
       const query = {};
@@ -63,20 +64,40 @@ async function run() {
       res.send(result);
     });
 
+    // get bookings
+
+    app.get("/bookings", async (req, res) => {
+      const email = req.query.email;
+      const query = {
+        email: email,
+      };
+      const result = await bookingCollection.find(query).toArray();
+      res.send(result);
+    });
+
     // /////Post method
 
     app.post("/bookings", async (req, res) => {
       const booking = req.body;
 
-      // const query = {
-      //   bookings: booking.productName,
-      // };
-      // const alreadyBooked = await bookingCollection.find(query).toArray();
-      // if (alreadyBooked.length) {
-      //   const message = `You already have booking on`;
-      //   return res.send({ acknowledged: false, message });
-      // }
+      const query = {
+        productName: booking.productName,
+        email: booking.email,
+      };
+      const alreadyBooked = await bookingCollection.find(query).toArray();
+      if (alreadyBooked.length) {
+        const message = `You already have booking on ${booking.productName}`;
+        return res.send({ acknowledged: false, message });
+      }
       const result = await bookingCollection.insertOne(booking);
+      res.send(result);
+    });
+
+    // post user
+
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
       res.send(result);
     });
   } finally {
