@@ -169,6 +169,23 @@ async function run() {
       res.send(result);
     });
 
+    // allSellers
+
+    app.get("/users/seller", async (req, res) => {
+      const email = req.body.email;
+      const query = { role: "seller" };
+      const user = await usersCollection.find(query).toArray();
+      res.send(user);
+    });
+    // allBuyers
+
+    app.get("/users/buyers", async (req, res) => {
+      const email = req.body.email;
+      const query = { role: "user" };
+      const user = await usersCollection.find(query).toArray();
+      res.send(user);
+    });
+
     // check the user is admin or not
 
     app.get("/users/admin/:email", async (req, res) => {
