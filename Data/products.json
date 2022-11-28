@@ -1,5 +1,6 @@
 [
   {
+    "category": "01",
     "product_id": "01",
     "title": "Lenovo ThinkPad X13s",
     "img": "https://indiaonlinemart.net/wp-content/uploads/2022/08/lenovo-thinkpad-x13s_review_05.jpg",
@@ -12,6 +13,7 @@
     "description": "The Lenovo ThinkPad X13s is Lenovo’s first Snapdragon ThinkPad, built in close collaboration with Qualcomm. All versions of the ThinkPad X13s come with a 13.3” FHD display and a Snapdragon 8Cx Gen 3 computing platform. Our unit has the following configuration: 16GB, non-touch display, and 512GB of storage. That said, there are various options you can choose from."
   },
   {
+    "category": "02",
     "product_id": "02",
     "title": "HP EliteBook 840 Aero G8",
     "img": "https://www.digitaltrends.com/wp-content/uploads/2021/09/hp-elitebook-840-aero-g8-laptop.jpg?p=1",
@@ -24,6 +26,7 @@
     "description": "It's in good position. It is Core i7-1185G7 and a 14-inch 1080p display"
   },
   {
+    "category": "03",
     "product_id": "03",
     "title": "Apple MacBook Air M2",
     "img": "https://cdn.pocket-lint.com/r/s/x1920/assets/images/161396-laptops-review-hands-on-macbook-air-review-image1-v2jzcb3rqd.jpg",
@@ -36,6 +39,7 @@
     "description": "In good condition. Dimensions: 304.1 x 113 x 21.5mm, 1.24kg. Ports: 2x USB-C (USB 4) / Thunderbolt 3, MagSafe 3, 3.5mm headphone jack. Finish options: Starlight, Midnight, Silver, Space Grey"
   },
   {
+    "category": "01",
     "product_id": "01",
     "title": "Lenovo IdeaPad Slim 5 AMD Ryzen 5 5500U 15.6 inch FHD Laptop",
     "img": "https://www.startech.com.bd/image/cache/catalog/laptop/lenovo/ideapad-slim-5/ideapad-slim-5-03-500x500.jpg",
@@ -48,6 +52,7 @@
     "description": "The Lenovo ThinkPad X13s is Lenovo’s first Snapdragon ThinkPad, built in close collaboration with Qualcomm. All versions of the ThinkPad X13s come with a 13.3” FHD display and a Snapdragon 8Cx Gen 3 computing platform. Our unit has the following configuration: 16GB, non-touch display, and 512GB of storage. That said, there are various options you can choose from."
   },
   {
+    "category": "03",
     "product_id": "03",
     "title": "Apple MacBook Air",
     "img": "https://cdn.pocket-lint.com/r/s/970x/assets/images/151520-laptops-review-hands-on-apple-macbook-air-2020-initial-review-keyboard-dreams-become-a-reality-image1-dwyvdpnsl7.jpg",
@@ -60,6 +65,7 @@
     "description": "In good condition. Available finishes: Gold (as pictured), Space Grey, Silver. 13.3-inch 'Retina display' (2650 x 1600 resolution). True Tone technology for adaptive colour. 2x USB-C/Thunderbolt 3 ports. 3.5mm headphone jack. 15.6mm thickness. 1.29kgs"
   },
   {
+    "category": "02",
     "product_id": "02",
     "title": "HP Pavilion 14-ec0005na Full-HD Laptop – Ryzen™ 7",
     "img": "https://www.hp.com/gb-en/shop/Html/Merch/Images/c07964576_1750x1285.jpg",

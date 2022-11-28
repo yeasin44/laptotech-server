@@ -67,20 +67,20 @@ async function run() {
       res.send(result);
     });
 
-    // app.get("/category/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = category.filter((n) => n.product_id === id);
-    //   const result = await productsCollection.find(query);
-
-    //   res.send(result);
-    // });
-
-    app.get("/products/product_id/:id", async (req, res) => {
+    app.get("/products/category/:id", async (req, res) => {
       const id = req.params.id;
-      const query = { product_id: id };
+      const query = { category: id };
       const result = await productsCollection.find(query).toArray();
+
       res.send(result);
     });
+
+    // app.get("/products/:product_id", async (req, res) => {
+    //   const id = req.params.id;
+    //   const query = { product_id: id };
+    //   const result = await productsCollection.find(query).toArray();
+    //   res.send(result);
+    // });
 
     // get bookings
 
@@ -129,7 +129,7 @@ async function run() {
       const user = await usersCollection.findOne(query);
       if (user) {
         const token = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: "1h",
+          expiresIn: "1d",
         });
         return res.send({ accessToken: token });
       }
