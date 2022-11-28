@@ -169,14 +169,39 @@ async function run() {
       res.send(result);
     });
 
+    // make seller
+    app.put("/users/seller/:id", verifyJWT, async (req, res) => {
+      const decodedEmail = req.decoded.email;
+      const query = { email: decodedEmail };
+      const user = await usersCollection.findOne(query);
+      if (user?.role !== "seller") {
+        return res.status(403).send({ message: "forbidden access" });
+      }
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          role: "seller",
+        },
+      };
+      const result = await usersCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
+    //  check the user is seller or not
+    app.get("/users/seller/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const user = await usersCollection.findOne(query);
+      res.send({ isSeller: user?.role === "seller" });
+    });
+
     // allSellers
 
-    app.get("/users/seller", async (req, res) => {
-      const email = req.body.email;
-      const query = { role: "seller" };
-      const user = await usersCollection.find(query).toArray();
-      res.send(user);
-    });
     // allBuyers
 
     app.get("/users/buyers", async (req, res) => {
