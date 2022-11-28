@@ -9,8 +9,6 @@ const jwt = require("jsonwebtoken");
 app.use(cors());
 app.use(express.json());
 
-// const uri = "mongodb://localhost:27017";
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.g5zarfc.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
@@ -42,6 +40,10 @@ async function run() {
     const categoryCollection = client.db("laptoTech").collection("category");
     const bookingCollection = client.db("laptoTech").collection("bookings");
     const usersCollection = client.db("laptoTech").collection("users");
+    const myProductsCollection = client
+      .db("laptoTech")
+      .collection("myProducts");
+    const advertiseCollection = client.db("laptoTech").collection("advertise");
 
     app.get("/products", async (req, res) => {
       const query = {};
@@ -54,12 +56,18 @@ async function run() {
       const result = await productsCollection.findOne(query);
       res.send(result);
     });
-    // app.get("/products/:id", async (req, res) => {
-    //   const product_id = req.params.id;
-    //   const query = { _id: ObjectId(product_id) };
-    //   const result = await productsCollection.find(query).toArray();
-    //   res.send(result);
-    // });
+
+    // verify admin
+    const verifyAdmin = async (req, res, next) => {
+      const decodedEmail = req.decoded.email;
+      const query = { email: decodedEmail };
+      const user = await usersCollection.findOne(query);
+
+      if (user?.role !== "admin") {
+        return res.status(403).send({ message: "forbidden access" });
+      }
+      next();
+    };
 
     app.get("/category", async (req, res) => {
       const query = {};
@@ -74,13 +82,6 @@ async function run() {
 
       res.send(result);
     });
-
-    // app.get("/products/:product_id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = { product_id: id };
-    //   const result = await productsCollection.find(query).toArray();
-    //   res.send(result);
-    // });
 
     // get bookings
 
@@ -146,7 +147,7 @@ async function run() {
 
     // Make admin
 
-    app.put("/users/admin/:id", verifyJWT, async (req, res) => {
+    app.put("/users/admin/:id", verifyJWT, verifyAdmin, async (req, res) => {
       const decodedEmail = req.decoded.email;
       const query = { email: decodedEmail };
       const user = await usersCollection.findOne(query);
@@ -202,6 +203,12 @@ async function run() {
 
     // allSellers
 
+    app.get("/users/seller", async (req, res) => {
+      const email = req.body.email;
+      const query = { role: "seller" };
+      const user = await usersCollection.find(query).toArray();
+      res.send(user);
+    });
     // allBuyers
 
     app.get("/users/buyers", async (req, res) => {
@@ -218,6 +225,33 @@ async function run() {
       const query = { email };
       const user = await usersCollection.findOne(query);
       res.send({ isAdmin: user?.role === "admin" });
+    });
+
+    // post my products
+
+    app.post("/myProducts", verifyJWT, async (req, res) => {
+      const myProduct = req.body;
+      const result = await myProductsCollection.insertOne(myProduct);
+      res.send(result);
+    });
+
+    app.get("/myProducts", verifyJWT, async (req, res) => {
+      const query = {};
+      const result = await myProductsCollection.find(query).toArray();
+      res.send(result);
+    });
+    // advertise
+
+    app.post("/advertise", async (req, res) => {
+      const advertise = req.body;
+      const result = await myProductsCollection.insertOne(advertise);
+      res.send(result);
+    });
+
+    app.get("/advertise", async (req, res) => {
+      const query = {};
+      const result = await myProductsCollection.find(query).toArray();
+      res.send(result);
     });
   } finally {
   }
